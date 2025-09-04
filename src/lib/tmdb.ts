@@ -1,8 +1,9 @@
 import type { MovieDetails } from "@/types/movie-details";
 
 const TMDB_BASE = "https://api.themoviedb.org/3";
-const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY!;
+const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
+type TMDBError = { status_message?: string; status_code?: number };
 export const tmdbImg = (
   path?: string,
   size: "w185" | "w342" | "w500" | "w780" | "w1280" = "w342"
@@ -10,14 +11,29 @@ export const tmdbImg = (
 
 async function tmdb<T>(
   endpoint: string,
-  params: Record<string, string | number | undefined> = {}
+  params: Record<string, string | number | undefined> = {},
+  init?: RequestInit
 ) {
+  if (!API_KEY) {
+    throw new Error("TMDB_API_KEY_MISSING");
+  }
+
   const sp = new URLSearchParams({ api_key: API_KEY, language: "pt-BR" });
   Object.entries(params).forEach(([k, v]) => v != null && sp.set(k, String(v)));
   const url = `${TMDB_BASE}${endpoint}?${sp.toString()}`;
-  const r = await fetch(url, { cache: "no-store" });
-  if (!r.ok) throw new Error(`TMDB error: ${r.status}`);
-  return r.json() as Promise<T>;
+
+  const r = await fetch(url, { cache: "no-store", ...init });
+
+  if (!r.ok) {
+    let detail = "";
+    try {
+      const j = (await r.json()) as TMDBError;
+      detail = j?.status_message ? ` - ${j.status_message}` : "";
+    } catch {}
+    throw new Error(`TMDB_${r.status}${detail}`);
+  }
+
+  return (await r.json()) as T;
 }
 
 export const getGenres = () =>

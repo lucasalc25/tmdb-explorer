@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import type { Genre, Movie, TMDBListResponse } from "@/types/tmdb";
-import type { SearchState } from "@/types/search"; // <- use o tipo centralizado
+import type { SearchState } from "@/types/search";
 import { discoverMovies, searchMovies } from "@/lib/tmdb";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import SearchBar from "@/components/SearchBar";
@@ -27,7 +27,7 @@ export default function ExplorerClient({ genres }: { genres: Genre[] }) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const controller = new AbortController(); // prefer-const (era let ab)
+    const controller = new AbortController();
     (async () => {
       setLoading(true);
       setError("");
@@ -44,7 +44,6 @@ export default function ExplorerClient({ genres }: { genres: Genre[] }) {
           setMovies(j.results || []);
           setTotalPages(Math.min(j.total_pages || 1, 500));
         } else {
-          // tipar corretamente sem any
           const opts: Record<string, string | number> = {
             page,
             sort_by: debounced.sort,
@@ -63,7 +62,6 @@ export default function ExplorerClient({ genres }: { genres: Genre[] }) {
           setTotalPages(Math.min(j.total_pages || 1, 500));
         }
       } catch (e: unknown) {
-        // sem any; trate abort de forma segura
         if (e instanceof DOMException && e.name === "AbortError") return;
         setError("Não foi possível buscar agora.");
       } finally {
