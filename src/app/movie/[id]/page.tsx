@@ -37,22 +37,26 @@ export default async function MoviePage({ params }: Params) {
       <section className="flex flex-col justify-end relative isolate min-h-[30vh]">
         {backdrop && (
           <>
-            <img
-              src={backdrop}
-              alt=""
-              className="absolute inset-0 -z-10 h-full w-full object-cover opacity-30"
-            />
+            <div className="absolute inset-0 -z-10">
+              <Image
+                src={backdrop}
+                alt=""
+                fill
+                className="object-cover opacity-30"
+                priority={false}
+              />
+            </div>
             <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-transparent to-zinc-950" />
           </>
         )}
 
         <div className="mx-[23.5%] max-w-5xl p-6">
-          <a
+          <Link
             href="/"
             className="inline-block text-sm text-zinc-300 hover:text-zinc-100"
           >
             ← Voltar
-          </a>
+          </Link>
         </div>
       </section>
 

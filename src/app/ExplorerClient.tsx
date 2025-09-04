@@ -27,12 +27,14 @@ export default function ExplorerClient({ genres }: { genres: Genre[] }) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    let ab = new AbortController();
+    const controller = new AbortController(); // prefer-const (era let ab)
     (async () => {
       setLoading(true);
       setError("");
+
       try {
         const hasQuery = !!debounced.q.trim();
+
         if (hasQuery) {
           const j = (await searchMovies(
             debounced.q,
@@ -42,26 +44,34 @@ export default function ExplorerClient({ genres }: { genres: Genre[] }) {
           setMovies(j.results || []);
           setTotalPages(Math.min(j.total_pages || 1, 500));
         } else {
-          const opts: any = { page, sort_by: debounced.sort };
+          // tipar corretamente sem any
+          const opts: Record<string, string | number> = {
+            page,
+            sort_by: debounced.sort,
+          };
           if (debounced.genreId) opts.with_genres = debounced.genreId;
           if (debounced.year) opts.primary_release_year = debounced.year;
+
           if (tab === "now_playing") {
             const today = new Date().toISOString().slice(0, 10);
             opts["release_date.lte"] = today;
             opts.sort_by = "release_date.desc";
           }
+
           const j = (await discoverMovies(opts)) as TMDBListResponse<Movie>;
           setMovies(j.results || []);
           setTotalPages(Math.min(j.total_pages || 1, 500));
         }
-      } catch (e: any) {
-        if (e?.name !== "AbortError")
-          setError("Não foi possível buscar agora.");
+      } catch (e: unknown) {
+        // sem any; trate abort de forma segura
+        if (e instanceof DOMException && e.name === "AbortError") return;
+        setError("Não foi possível buscar agora.");
       } finally {
         setLoading(false);
       }
     })();
-    return () => ab.abort();
+
+    return () => controller.abort();
   }, [debounced, page, tab]);
 
   const onChange = (patch: Partial<SearchState>) => {
