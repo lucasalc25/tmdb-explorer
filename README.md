@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎬 TMDB Explorer
 
-## Getting Started
+Aplicação web feita em **Next.js 15 + Tailwind CSS** que consome a [TMDB API](https://developer.themoviedb.org/) para explorar filmes, com funcionalidades de:
 
-First, run the development server:
+- 🔍 Busca por título  
+- 🎭 Filtro por gênero  
+- 📅 Filtro por ano de lançamento  
+- ↕️ Ordenação por popularidade, nota e data (crescente/decrescente)  
+- 🖼️ Listagem com pôster, título, ano, nota e sinopse  
+- 📖 Página de detalhes de cada filme  
+
+> **Aviso**: Este projeto é **não comercial** e tem finalidade educacional/portfólio.  
+> Dados fornecidos pela [TMDB](https://www.themoviedb.org/) — “Powered by TMDB”.
+
+---
+
+## 🚀 Tecnologias
+
+- [Next.js 15 (App Router)](https://nextjs.org/)  
+- [React 18](https://react.dev/)  
+- [Tailwind CSS v4](https://tailwindcss.com/)  
+- [TypeScript](https://www.typescriptlang.org/)  
+
+---
+
+## ⚙️ Pré-requisitos
+
+- [Node.js](https://nodejs.org/) (>= 18)  
+- [pnpm](https://pnpm.io/) (recomendado) ou npm/yarn  
+
+---
+
+## 📥 Instalação
+
+Clone o repositório e instale as dependências:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+git clone https://github.com/SEU_USUARIO/tmdb-explorer.git
+cd tmdb-explorer
+pnpm install
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
