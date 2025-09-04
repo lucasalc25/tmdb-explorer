@@ -38,4 +38,20 @@ Clone o repositório e instale as dependências:
 git clone https://github.com/SEU_USUARIO/tmdb-explorer.git
 cd tmdb-explorer
 pnpm install
+```
 
+## 🔑 Variáveis de Ambiente
+
+Crie um arquivo .env.local na raiz do projeto com a sua chave da TMDB:
+
+```bash
+NEXT_PUBLIC_TMDB_API_KEY=COLE_SUA_CHAVE_AQUI
+```
+Você pode obter a chave gratuita em: [TMDB API Settings](https://www.themoviedb.org/settings/api)
+
+## 🏃 Rodando em Dev
+
+```bash
+pnpm dev
+```
+Abra http://localhost:3000 no navegador.
